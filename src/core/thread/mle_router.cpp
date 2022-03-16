@@ -1863,6 +1863,9 @@ void MleRouter::HandleTimeTick(void)
             LogInfo("Child CSL synchronization expired");
             child.SetCslSynchronized(false);
             Get<CslTxScheduler>().Update();
+            // Update the MAC counters for loss of sync
+            otMacCounters &counters = Get<Mac::Mac>().GetCounters();
+            counters.mTxCslLossOfSyncCountDueToCslTimeout++;
         }
 #endif
 

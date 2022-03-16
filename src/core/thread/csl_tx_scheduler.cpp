@@ -244,6 +244,9 @@ exit:
 
 void CslTxScheduler::HandleSentFrame(const Mac::TxFrame &aFrame, Error aError, Child &aChild)
 {
+    otMacCounters &counters = Get<Mac::Mac>().GetCounters();
+    counters.mTxCslTotal++;
+
     switch (aError)
     {
     case kErrorNone:
@@ -263,11 +266,15 @@ void CslTxScheduler::HandleSentFrame(const Mac::TxFrame &aFrame, Error aError, C
             // CSL transmission attempts reach max, consider child out of sync
             aChild.SetCslSynchronized(false);
             aChild.ResetCslTxAttempts();
+            // Update the MAC counters for loss of sync
+            counters.mTxCslLossOfSyncCountDueToReTx++;
         }
+        counters.mTxCslErrNoAck++;
 
         OT_FALL_THROUGH;
 
     case kErrorChannelAccessFailure:
+        counters.mTxCslErrBusyChannel++;
     case kErrorAbort:
 
         // Even if CSL tx attempts count reaches max, the message won't be
@@ -290,7 +297,7 @@ void CslTxScheduler::HandleSentFrame(const Mac::TxFrame &aFrame, Error aError, C
                 aChild.SetIndirectKeyId(keyId);
             }
         }
-
+        counters.mTxErrAbort++;
         RescheduleCslTx();
         ExitNow();
 
@@ -298,7 +305,6 @@ void CslTxScheduler::HandleSentFrame(const Mac::TxFrame &aFrame, Error aError, C
         OT_ASSERT(false);
         OT_UNREACHABLE_CODE(break);
     }
-
     mCallbacks.HandleSentFrameToChild(aFrame, mFrameContext, aError, aChild);
 
 exit:

@@ -262,6 +262,42 @@ typedef struct otMacCounters
     uint32_t mTxErrBusyChannel;
 
     /**
+     * Total number of CSL transmissions.
+     *
+     */
+    uint32_t mTxCslTotal;
+
+    /**
+     * Total number of NoAck failures for CSL transmissions.
+     *
+     */
+    uint32_t mTxCslErrNoAck;
+
+    /**
+     * The total number of aborted CSL transmissions.
+     *
+     */
+    uint32_t mTxCslErrAbort;
+
+    /**
+     * The total number of unique MAC CSL transmission requests failures caused by a busy channel (a CSMA/CA fail).
+     *
+     */
+    uint32_t mTxCslErrBusyChannel;
+
+    /**
+     * The total number of times CSL synchronization is lost due to CSL timeout.
+     *
+     */
+    uint32_t mTxCslLossOfSyncCountDueToCslTimeout;
+
+    /**
+     * The total number of times CSL synchronization is lost due to max retry.
+     *
+     */
+    uint32_t mTxCslLossOfSyncCountDueToReTx;
+
+    /**
      * The total number of received frames.
      *
      * This counter counts all frames reported by the platform's radio driver, including frames
