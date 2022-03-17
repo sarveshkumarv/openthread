@@ -1278,6 +1278,12 @@ template <> otError Interpreter::Process<Cmd("counters")>(Arg aArgs[])
                 {&otMacCounters::mTxRetry, "TxRetry"},
                 {&otMacCounters::mTxErrCca, "TxErrCca"},
                 {&otMacCounters::mTxErrBusyChannel, "TxErrBusyChannel"},
+                {&otMacCounters::mTxCslTotal, "TxCslTotal"},
+                {&otMacCounters::mTxCslErrNoAck, "TxCslErrNoAck"},
+                {&otMacCounters::mTxCslErrAbort, "TxCslErrAbort"},
+                {&otMacCounters::mTxCslErrBusyChannel, "TxCslErrBusyChannel"},
+                {&otMacCounters::mTxCslLossOfSyncCountDueToCslTimeout, "TxCslLossOfSyncCountDueToCslTimeout"},
+                {&otMacCounters::mTxCslLossOfSyncCountDueToReTx, "TxCslLossOfSyncCountDueToReTx"},
             };
 
             static const MacCounterName kRxCounterNames[] = {
