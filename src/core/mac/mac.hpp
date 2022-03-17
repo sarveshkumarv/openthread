@@ -529,6 +529,7 @@ public:
      *
      */
     bool IsPerformingIndirectTransmit(void) const { return (mOperation == kOperationTransmitDataIndirect); }
+
 #endif
 
     /**
